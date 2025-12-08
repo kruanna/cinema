@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Пользователи</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{layout/header :: header}"></div>
+
+<div class="container">
+  <div class="card">
+
+    <h2 class="page-title">Управление пользователями</h2>
+
+    <!-- Ошибки -->
+    <div th:if="${param.error}">
+      <p style="color:#7c1f2b; font-weight:600; margin-bottom:10px;">
+        <span th:if="${param.error[0] == 'cannotDeleteYourself'}">Нельзя удалить самого себя!</span>
+        <span th:if="${param.error[0] == 'cannotChangeYourRole'}">Нельзя менять роль самому себе!</span>
+      </p>
+    </div>
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Логин</th>
+        <th>ФИО</th>
+        <th>Роль</th>
+        <th>Действия</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="u, iter : ${users}">
+        <td th:text="${iter.index + 1}"></td>
+        <td th:text="${u.username}"></td>
+        <td th:text="${u.fullName}"></td>
+        <td th:text="${u.role}"></td>
+
+        <td>
+          <div class="actions">
+            <form th:action="@{'/admin/users/changeRole/' + ${u.id}}" method="post">
+              <button type="submit" class="btn btn-small">Сменить роль</button>
+            </form>
+
+            <form th:action="@{'/admin/users/delete/' + ${u.id}}" method="post">
+              <button type="submit" class="btn btn-delete btn-small">Удалить</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Об авторе</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="layout/header :: header"></div>
+
+<div class="container">
+  <div class="card">
+
+    <h2>Об авторе</h2>
+
+    <p><strong>ФИО:</strong> Крупинова Анна Артёмовна</p>
+    <p><strong>Учебное заведение:</strong> Финансовый университет при Правительстве РФ</p>
+    <p><strong>Направление:</strong> Прикладная информатика (3 курс)</p>
+
+    <h3>О проекте</h3>
+    <p>
+      Данный сайт создан в рамках курсовой работы по дисциплине
+      <em>«Современные технологии программирования»</em>.
+      Это информационно-справочная система кинотеатра, позволяющая управлять фильмами,
+      сеансами, статистикой и пользователями.
+    </p>
+
+    <h3>Опыт работы с технологиями</h3>
+    <p>
+      Разработка велась с использованием следующих технологий:
+      <strong>Java, Spring Boot, Spring Security, Hibernate, PostgreSQL,
+        HTML, CSS, Thymeleaf</strong>.
+      Автор уверенно владеет архитектурой MVC, ORM-моделированием, SQL, созданием web-приложений.
+    </p>
+
+    <h3>Сроки разработки</h3>
+    <p><strong>Начало:</strong> 01.10.2025</p>
+    <p><strong>Завершение:</strong> 06.12.2025</p>
+
+    <h3>Контакты</h3>
+    <p><strong>E-mail:</strong> 234264@edu.fa.ru</p>
+
+  </div>
+</div>
+
+</body>
+</html>

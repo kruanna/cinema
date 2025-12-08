@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Фильмы</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{layout/header :: header}"></div>
+
+<div class="container">
+    <div class="card">
+        <h2 class="page-title">Список фильмов</h2>
+
+        <div class="controls">
+            <form method="get" action="/movies" style="display:flex; gap:8px; align-items:center;">
+                <input type="text" name="search" placeholder="Поиск по названию" th:value="${search}">
+                <button type="submit" class="btn">Найти</button>
+                <a href="/movies" th:if="${search != null or genre != null or sort != null}" class="btn btn-outline" style="margin-left:8px;">Сбросить</a>
+            </form>
+        </div>
+
+        <div class="controls" style="margin-top:8px;">
+            <form method="get" action="/movies" style="display:flex; gap:8px; align-items:center;">
+                <select name="genre">
+                    <option value="">Выберите жанр</option>
+                    <option th:selected="${genre == 'Комедия'}">Комедия</option>
+                    <option th:selected="${genre == 'Драма'}">Драма</option>
+                    <option th:selected="${genre == 'Боевик'}">Боевик</option>
+                    <option th:selected="${genre == 'Хоррор'}">Хоррор</option>
+                    <option th:selected="${genre == 'Фантастика'}">Фантастика</option>
+                    <option th:selected="${genre == 'Мультфильм'}">Мультфильм</option>
+                </select>
+                <button type="submit" class="btn">Фильтр</button>
+            </form>
+
+            <form method="get" action="/movies" style="display:flex; gap:8px; align-items:center; margin-left:16px;">
+                <select name="sort">
+                    <option value="">Сортировка</option>
+                    <option value="title" th:selected="${sort == 'title'}">По названию</option>
+                    <option value="duration" th:selected="${sort == 'duration'}">По длительности</option>
+                </select>
+                <button type="submit" class="btn">OK</button>
+            </form>
+        </div>
+
+        <!-- Добавление фильма -->
+        <div style="margin-top:12px;">
+            <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                <a href="/movies/add" class="btn">Добавить фильм</a>
+            </div>
+        </div>
+
+        <div style="margin-top:18px;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Жанр</th>
+                    <th>Длительность</th>
+                    <th>Возраст</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="movie : ${movies}">
+                    <td th:text="${movie.title}"></td>
+                    <td th:text="${movie.genre}"></td>
+                    <td th:text="${movie.durationMin}"></td>
+                    <td th:text="${movie.ageRating}"></td>
+                    <td>
+                        <div class="actions">
+                            <span th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                                <a th:href="@{'/movies/edit/' + ${movie.id}}" class="btn btn-small">Редактировать</a>
+                                <a th:href="@{'/movies/delete/' + ${movie.id}}"
+                                   onclick="return confirm('Удалить фильм?')" class="btn btn-delete btn-small">Удалить</a>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

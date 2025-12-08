@@ -1,0 +1,299 @@
+/* style.css — единый минималистичный дизайн с бордовым акцентом */
+
+/* Базовые настройки */
+:root{
+  --accent: #7c1f2b;        /* основной бордовый */
+  --accent-dark: #5b1620;   /* темнее при ховере */
+  --muted: rgba(255,255,255,0.75); /* полупрозрачная подложка */
+  --card-bg: rgba(255,255,255,0.65);
+  --text: #222;
+  --shadow: 0 6px 18px rgba(0,0,0,0.25);
+  --radius: 10px;
+  --gap: 16px;
+  --max-width: 1100px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Фон на весь экран */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* фон */
+body {
+  background-image: url('/img/background.jpg'); /* путь относительный к static */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* полупрозрачная затемнённая шапка */
+.header-bar {
+  width: 100%;
+  background: rgba(30,30,30,0.7);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* контейнер для контента (центрирование) */
+.container {
+  width: calc(100% - 40px);
+  max-width: var(--max-width);
+  margin: 40px auto;
+  box-sizing: border-box;
+}
+
+/* Карточка (полупрозрачная панель с blur) */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* Заголовки страницы */
+.page-title {
+  margin: 0 0 12px 0;
+  text-align: center;
+  font-size: 32px;
+  font-weight: 500;
+  color: #111;
+}
+
+/* подзаголовок / описание */
+.lead {
+  text-align: center;
+  color: #333;
+  margin-bottom: 18px;
+}
+
+/* Кнопки */
+.btn {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+  transition: background .15s ease;
+}
+.btn:hover {
+  background: var(--accent-dark);
+}
+
+/* Второстепенная кнопка (outline) */
+.btn-outline {
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.15);
+  color: #111;
+}
+.btn-small { padding:6px 10px; font-size:13px; border-radius:6px; }
+
+/* Параметры форм */
+.form-row { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+.form-row input[type="text"], .form-row input[type="date"], .form-row input[type="time"],
+.form-row input[type="number"], .form-row select, .form-row textarea {
+  padding:8px 10px;
+  border-radius:6px;
+  border:1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.9);
+  box-sizing:border-box;
+  font-size:14px;
+}
+
+/* Таблицы */
+.table {
+  width:100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 14px;
+}
+.table th, .table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  text-align: left;
+}
+.table th {
+  background: rgba(255,255,255,0.6);
+  font-weight: 600;
+}
+.table tr:nth-child(even) td {
+  background: rgba(0,0,0,0.02);
+}
+
+/* Действия в таблице */
+.actions { display:flex; gap:8px; align-items:center; }
+
+/* Кнопка удаления (слабый сигнал) */
+.btn-delete {
+  background: #e9a7a7;
+  color: #600;
+}
+.btn-delete:hover { filter:brightness(.95); }
+
+/* Панель поиска/фильтров сверху таблицы */
+.controls { display:flex; gap:12px; align-items:center; margin-bottom:14px; }
+
+/* Карточка с графиком */
+.chart-card {
+  padding: 18px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,0.6);
+  box-shadow: var(--shadow);
+  border:1px solid rgba(255,255,255,0.35);
+}
+
+/* Footer (если потребуется) */
+.footer {
+  text-align:center;
+  color: rgba(0,0,0,0.6);
+  margin: 30px 0;
+}
+
+/* Ошибки (страницы 404/500/403) */
+.error-wrap { max-width:800px; margin:80px auto; text-align:center; }
+.error-code { font-size:48px; margin-bottom:8px; }
+.error-msg { font-size:18px; margin-bottom:16px; }
+
+/* мелкие вспомогательные стили */
+.center { text-align:center; }
+.mt-8 { margin-top:8px; }
+.mb-8 { margin-bottom:8px; }
+
+/* Ссылки в шапке */
+.header-left a, .header-right a { color: #fff; text-decoration:none; margin-right:10px; }
+.header-right form { display:inline; margin-left:10px; }
+
+/* Стили для canvas (Chart.js) - чтобы выглядеть "встроенным" */
+canvas {
+  width:100% !important;
+  height:auto !important;
+  display:block;
+}
+
+/* Убираем outline у кнопок при фокусе (чтобы было аккуратно) */
+button:focus, a:focus { outline: none; }
+
+/* Немного отступов для мобильных при редактировании (не критично) */
+@media (max-width: 800px) {
+  .form-row { flex-direction: column; }
+  .container { margin: 20px; }
+}
+/* Полноширинная кнопка-ссылка (используется в login/register) */
+.btn-full {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 8px 0;
+    border-radius: 8px;
+}
+
+/* Ссылки-ошибки */
+.error-text {
+    color: #7c1f2b;
+    margin-top: 10px;
+}
+/* Центрирование карточек авторизации */
+.login-card {
+    max-width: 420px;
+    margin: 60px auto;
+}
+
+/* Увеличенные поля ввода */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-input {
+    padding: 12px 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.25);
+    background: rgba(255,255,255,0.9);
+}
+
+.form-label {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: -6px;
+}
+
+/* Крупные кнопки */
+.btn-large {
+    padding: 12px 16px;
+    font-size: 18px;
+}
+
+/* Ссылка под формой */
+.auth-link {
+    font-size: 16px;
+    color: var(--accent);
+    text-decoration: underline;
+}
+.auth-link:hover {
+    color: var(--accent-dark);
+}
+
+.error-msg {
+    color: darkred;
+    font-size: 15px;
+    margin-top: 8px;
+    text-align: center;
+}
+.error {
+    color: darkred;
+    font-size: 14px;
+    margin: 3px 0 10px 0;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-window {
+    background: white;
+    padding: 22px 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.modal-window h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.modal-window .btn {
+    margin-top: 10px;
+}
+

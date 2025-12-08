@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Сеансы</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="~{layout/header :: header}"></div>
+
+<div class="container">
+  <div class="card">
+
+    <h2 class="page-title">Расписание сеансов</h2>
+
+    <!-- Поиск -->
+    <div class="controls">
+      <form method="get" action="/sessions" style="display:flex; gap:8px;">
+        <input type="text" name="search" placeholder="Поиск по названию фильма" th:value="${search}">
+        <button class="btn">Найти</button>
+      </form>
+    </div>
+
+    <!-- Фильтр по дате -->
+    <div class="controls">
+      <form method="get" action="/sessions" style="display:flex; gap:8px;">
+        <input type="date" name="date" th:value="${date}">
+        <button class="btn">Показать</button>
+      </form>
+    </div>
+
+    <!-- Сортировка -->
+    <div class="controls">
+      <form method="get" action="/sessions" style="display:flex; gap:8px;">
+        <select name="sort">
+          <option value="">Сортировка</option>
+          <option value="time" th:selected="${sort == 'time'}">По времени</option>
+        </select>
+        <button class="btn">OK</button>
+      </form>
+    </div>
+
+    <!-- Кнопка сброса фильтров -->
+    <div style="margin-top: 15px;"
+         th:if="${search != null or date != null or sort != null}">
+      <a href="/sessions" class="btn btn-outline">Сбросить</a>
+    </div>
+
+    <!-- Добавить сеанс -->
+    <div style="margin-top:12px;">
+      <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+        <a href="/sessions/add" class="btn">Добавить сеанс</a>
+      </div>
+    </div>
+
+    <!-- Таблица -->
+    <table class="table" style="margin-top:16px;">
+      <thead>
+      <tr>
+        <th>Фильм</th>
+        <th>Дата</th>
+        <th>Время</th>
+        <th>Цена</th>
+        <th>Действия</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr th:each="s : ${sessions}">
+        <td th:text="${s.movie.title}"></td>
+        <td th:text="${s.date}"></td>
+        <td th:text="${s.time}"></td>
+        <td th:text="${s.price} + ' ₽'"></td>
+
+        <td>
+          <div class="actions" th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+            <a th:href="@{'/sessions/edit/' + ${s.id}}" class="btn btn-small">Редактировать</a>
+            <a th:href="@{'/sessions/delete/' + ${s.id}}"
+               onclick="return confirm('Удалить сеанс?')"
+               class="btn btn-delete btn-small">Удалить</a>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+</body>
+</html>

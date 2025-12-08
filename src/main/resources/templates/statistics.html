@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Статистика</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="layout/header :: header"></div>
+
+<div class="container">
+  <div class="card">
+
+    <h2>Статистика системы</h2>
+
+    <p><b>Общее количество фильмов:</b> <span th:text="${movieCount}"></span></p>
+    <p><b>Общее количество сеансов:</b> <span th:text="${sessionCount}"></span></p>
+    <p><b>Самый популярный жанр:</b> <span th:text="${topGenre}"></span></p>
+    <p><b>Общая выручка:</b> <span th:text="${totalRevenue} + ' ₽'"></span></p>
+
+    <h3>Популярность жанров</h3>
+
+    <canvas id="genreChart" width="400" height="200"
+            style="background:rgba(255,255,255,0.4); border-radius:10px; padding:10px;"></canvas>
+
+    <script th:inline="javascript">
+      const genres = [[${genres}]];
+      const counts = [[${counts}]];
+
+      new Chart(document.getElementById('genreChart'), {
+          type: 'bar',
+          data: {
+              labels: genres,
+              datasets: [{
+                  label: 'Количество фильмов',
+                  data: counts,
+                  backgroundColor: 'rgba(120,20,40,0.5)',
+                  borderColor: 'rgba(120,20,40,0.9)',
+                  borderWidth: 2
+              }]
+          }
+      });
+    </script>
+
+  </div>
+</div>
+
+</body>
+</html>

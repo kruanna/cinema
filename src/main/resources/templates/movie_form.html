@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Фильм</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div th:replace="layout/header :: header"></div>
+
+<div class="container">
+    <div class="card">
+
+        <h2 th:text="${movie.id == null ? 'Добавить фильм' : 'Редактировать фильм'}"></h2>
+
+        <!-- Сообщение об успешном добавлении -->
+        <div class="success" th:if="${success}">
+            <p th:text="${success}"></p>
+        </div>
+
+        <form th:action="@{/movies/save}" method="post" th:object="${movie}" class="form-grid">
+            <input type="hidden" th:field="*{id}">
+
+            <!-- Название -->
+            <label>Название:</label>
+            <input type="text" th:field="*{title}">
+            <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+
+            <!-- Жанр -->
+            <label>Жанр:</label>
+            <input type="text" th:field="*{genre}">
+            <p class="error" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></p>
+
+            <!-- Длительность -->
+            <label>Длительность (мин):</label>
+            <input type="number" th:field="*{durationMin}">
+            <p class="error" th:if="${#fields.hasErrors('durationMin')}" th:errors="*{durationMin}"></p>
+
+            <!-- Возрастной рейтинг -->
+            <label>Возрастной рейтинг:</label>
+            <input type="text" th:field="*{ageRating}">
+            <p class="error" th:if="${#fields.hasErrors('ageRating')}" th:errors="*{ageRating}"></p>
+
+            <!-- Описание -->
+            <label>Описание:</label>
+            <textarea th:field="*{description}" rows="4"></textarea>
+            <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></p>
+
+            <button type="submit" class="btn" style="margin-top:15px;">Сохранить</button>
+            <a href="/movies" class="btn btn-small" style="margin-top:15px;">Отмена</a>
+
+        </form>
+
+    </div>
+</div>
+
+<div th:if="${success}" class="modal-overlay">
+    <div class="modal-window">
+        <h3 th:text="${success}"></h3>
+        <a th:href="${redirectUrl}" class="btn">Закрыть</a>
+    </div>
+</div>
+
+</body>
+</html>
